@@ -93,3 +93,5 @@ ASSIGNMENT TITLE => WAIT FOR TABLE
 - Appendices
     ->    Full code (as text).
     ->    Link to Panopto demo.
+
+    ![alt text](image.png)
