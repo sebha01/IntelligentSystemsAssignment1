@@ -56,8 +56,8 @@ ASSIGNMENT TITLE => WAIT FOR TABLE
 -- -- Structure (suggested headings) -- --
 
 - Introduction
-    ->    Brief description of your problem domain (the tree you were assigned).
-    ->    Purpose of expert systems and your chosen approach.
+    ->    Brief description of your problem domain (the tree you were assigned). - DONE
+    ->    Purpose of expert systems and your chosen approach. - DONE
 
 - System Description
     ->    How you converted the decision tree into rules.
