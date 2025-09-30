@@ -130,6 +130,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApplicationManager.h" />
     <ClInclude Include="GlobalHeader.h" />
     <ClInclude Include="Fact.h" />
     <ClInclude Include="RuleBase.h" />

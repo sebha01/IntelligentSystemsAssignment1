@@ -32,5 +32,8 @@
     <ClInclude Include="RuleBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ApplicationManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

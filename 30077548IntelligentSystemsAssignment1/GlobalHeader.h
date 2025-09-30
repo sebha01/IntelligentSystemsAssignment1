@@ -1,7 +1,14 @@
 #pragma once
 
 #include <iostream>
+#include <cstdlib>
+#include <windows.h>
+#include <iomanip>
+#include <chrono>
+#include <thread>
 #include <vector>
+#include <fstream>
+#include <string>
 
 enum Decision {
 	WAIT,
@@ -17,9 +24,7 @@ std::vector<std::string> questionsToAsk =
 	"Are you hungry?\n1| Yes\n2| No\n",
 	"Are there alternative restaurants you can go to nearby?\n1| Yes\n2| No\n"
 	"Do you have a reservation with the restaurant?\n1| Yes\n2| No\n",
-	"",
-	"",
-	"",
-	"",
-	"",
+	"Does the restaurant have a bar?\n1| Yes\n2| No\n",
+	"Is it a rainy day?\n1| Yes\n2| No\n",
+	"Is it one of the restaurants popular days?\n1| Yes\n2| No\n"
 };
