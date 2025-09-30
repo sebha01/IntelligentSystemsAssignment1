@@ -44,7 +44,7 @@ void ApplicationManager::update()
 	//continue to loop until the user decides to exit
 	while (!canExit)
 	{
-		return 0;
+		break;
 	}
 
 	//Exit now that everything needed has been completed
