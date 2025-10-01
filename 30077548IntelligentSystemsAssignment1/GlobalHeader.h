@@ -10,13 +10,6 @@
 #include <fstream>
 #include <string>
 
-enum Decision {
-	WAIT,
-	LEAVE,
-	NO,
-	YES
-};
-
 std::vector<std::string> questionsToAsk = 
 {
 	"How many customers are in the restaurant?\n1| A few\n2| Some\n3| Full of customers\n",
