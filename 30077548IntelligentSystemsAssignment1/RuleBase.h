@@ -26,26 +26,22 @@ public:
 			{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "yes"}},
 			{"decision", "leave"}
 		},
-		//Full of customers, waiting time 31-60 mins, alternative restaurant no,
-		//reservation no, bar no, so leave
+		//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation no, bar no, so leave
 		{
 			{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "no"}, { "bar", "no" }},
 			{"decision", "leave"}
 		},
-		//Full of customers, waiting time 31-60 mins, alternative restaurant no,
-		//reservation no, bar yes, so wait
+		//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation no, bar yes, so wait
 		{
 			{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "no"}, {"bar", "yes"}},
 			{"decision", "wait"}
 		},
-		//Full of customers, waiting time 31-60 mins, alternative restaurant no,
-		//reservation yes, popular day no, so leave
+		//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation yes, popular day no, so leave
 		{
 			{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "yes"}, {"popularDay", "no"}},
 			{"decision", "leave"}
 		},
-		//Full of customers, waiting time 31-60 mins, alternative restaurant no,
-		//reservation yes, popular day yes, so wait
+		//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation yes, popular day yes, so wait
 		{
 			{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "yes"}, {"popularDay", "yes"}},
 			{"decision", "wait"}
