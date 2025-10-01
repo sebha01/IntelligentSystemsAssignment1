@@ -8,8 +8,7 @@ class WorkingMemory {
 
 	public:
 		void addFact(Fact f);
-		bool isFactInWM(Fact f);
-		bool isKnownFact(std::string name);
+		bool isFactInWM(std::string name);
 		std::string getFactValue(std::string name);
 		bool decisionReached();
 };
@@ -17,27 +16,13 @@ class WorkingMemory {
 void WorkingMemory::addFact(Fact f)
 {
 	//Only add the fact into the working memory as long as there isn't duplicate found
-	if (!isFactInWM(f)) 
+	if (!isFactInWM(f.factName)) 
 	{ 
 		facts.push_back(f); 
 	}
 }
 
-bool WorkingMemory::isFactInWM(Fact f)
-{
-	//Loop through facts to double check there is not an exact duplicate
-	for (int i = 0; i < facts.size(); i++)
-	{
-		if (facts[i].factName == f.factName && facts[i].factValue == f.factValue)
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool WorkingMemory::isKnownFact(std::string name)
+bool WorkingMemory::isFactInWM(std::string name)
 {
 	for (int i = 0; i < facts.size(); i++)
 	{
