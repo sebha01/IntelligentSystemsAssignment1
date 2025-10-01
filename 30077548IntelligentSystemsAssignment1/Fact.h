@@ -4,14 +4,28 @@
 class Fact {
 public:
 	//member variables
-	std::string factName;
-	std::string factValue;
+	std::string factName = "";
+	std::string factValue = "";
 
-	//member functions
-	void setFactValue(std::string f);
+	//Constructor
+	Fact(std::string name, std::string value)
+	{
+		this->factName = name;
+		this->factValue = value;
+	}
 };
 
-void Fact::setFactValue(std::string f) 
-{
-	this->factValue = f;
-}
+
+/*
+
+customers {FEW,SOME,FULL},
+waiting-time {<10,10-30,31-60,>60}, 
+hungry {YES,NO}, 
+alternative {YES,NO}, 
+reservation {YES,NO}, 
+bar {YES,NO}, 
+popular-day {YES,NO}, 
+raining {YES,NO}, 
+decision {WAIT,LEAVE}
+
+*/

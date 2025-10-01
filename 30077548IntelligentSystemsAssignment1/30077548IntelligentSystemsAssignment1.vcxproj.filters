@@ -35,5 +35,8 @@
     <ClInclude Include="ApplicationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InferenceEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

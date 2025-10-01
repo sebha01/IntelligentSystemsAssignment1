@@ -4,7 +4,10 @@
 
 class RuleBase {
 public:
-	std::vector<Fact> rules;
+	std::vector<Fact> rules = 
+	{
+		{}
+	};
 
 	//Member functions
 	Decision returnDecision(std::vector<Fact> f);
@@ -13,5 +16,7 @@ public:
 
 Decision RuleBase::returnDecision(std::vector<Fact> f)
 {
+
+
 	return Decision::WAIT;
 }
