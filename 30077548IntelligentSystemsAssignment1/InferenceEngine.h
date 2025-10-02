@@ -7,5 +7,7 @@ class InferenceEngine {
 		WorkingMemory wM;
 		RuleBase rB;
 	public:
-
+		void fireQuestion();
+		void traceStep();
+		void conflictRes();
 };
