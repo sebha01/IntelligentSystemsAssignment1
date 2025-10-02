@@ -8,7 +8,10 @@ class InferenceEngine {
 		RuleBase rB;
 		Questions q;
 		int choice = 0;
+		bool canExit = false;
 	public:
+		bool getCanExit();
+		void setCanExit(bool var);
 		int validateInput(int minChoice, int maxChoice);
 		void resetChoice();
 		void fireQuestion();
@@ -16,6 +19,16 @@ class InferenceEngine {
 		void conflictRes();
 		void askQuestion(std::string questionName);
 };
+
+bool InferenceEngine::getCanExit()
+{
+	return canExit;
+}
+
+void InferenceEngine::setCanExit(bool var)
+{
+	this->canExit = var;
+}
 
 int InferenceEngine::validateInput(int minChoice, int maxChoice)
 {
@@ -45,6 +58,8 @@ void InferenceEngine::fireQuestion()
 	{
 		askQuestion("customer");
 	}
+
+	traceStep();
 }
 
 void InferenceEngine::traceStep()

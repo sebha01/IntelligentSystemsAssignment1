@@ -6,8 +6,6 @@
 class ApplicationManager
 {
 private:
-	//game loop variables
-	bool canExit = false;
 	InferenceEngine iE;
 
 public:
@@ -43,7 +41,7 @@ void ApplicationManager::showTitle()
 void ApplicationManager::update()
 {
 	//continue to loop until the user decides to exit
-	while (!canExit)
+	while (iE.getCanExit() == false)
 	{
 		iE.fireQuestion();
 	}
