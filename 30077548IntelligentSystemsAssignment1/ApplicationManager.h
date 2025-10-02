@@ -1,13 +1,14 @@
 #pragma once
 
 #include "GlobalHeader.h"
+#include "InferenceEngine.h"
 
 class ApplicationManager
 {
 private:
 	//game loop variables
 	bool canExit = false;
-	int choice = 0;
+	InferenceEngine iE;
 
 public:
 	void init();
@@ -44,35 +45,14 @@ void ApplicationManager::update()
 	//continue to loop until the user decides to exit
 	while (!canExit)
 	{
-		break;
+		iE.fireQuestion();
 	}
 
 	//Exit now that everything needed has been completed
 	exit(0);
 }
 
-int ApplicationManager::validateInput(int minChoice, int maxChoice)
-{
-	//got this validation from my pokemon game year 1 assignment, if you need me to show you ask me
-	while (!(std::cin >> choice) || (choice < minChoice || choice > maxChoice))
-	{
-		std::cout << std::endl << "Invalid input, please choose a number between " << minChoice << " and " << maxChoice << " -> ";
 
-		//clear the input and ignore any other characters on that line if user has typed in a sentence
-		std::cin.clear();
-		std::cin.ignore(500, '\n');
-	}
-
-	return choice;
-}
-
-
-int ApplicationManager::resetChoice()
-{
-	//Simple but easier to type out a fuction for finding bugs later than just a line
-	choice = 0;
-	return choice;
-}
 
 void ApplicationManager::startDelay(double secondsToDelay, std::string messageToDisplay)
 {

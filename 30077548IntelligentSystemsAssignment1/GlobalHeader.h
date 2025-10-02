@@ -38,4 +38,15 @@ public:
 		"\n1| Yes\n2| No\n",
 		"\n1| Yes\n2| No\n",
 	};
+	std::vector<std::pair<int, int>> choiceNumbers =
+	{
+		{1, 3},
+		{1, 4},
+		{1, 2},
+		{1, 2},
+		{1, 2},
+		{1, 2},
+		{1, 2},
+		{1, 2}
+	};
 };
