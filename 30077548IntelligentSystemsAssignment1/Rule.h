@@ -5,5 +5,5 @@
 class Rule {
 	public:
 		std::vector<Fact> conditions = {};
-		Fact conclusion;
+		Decision decision;
 };
