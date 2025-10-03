@@ -74,9 +74,15 @@ class RuleBase {
 		};
 	public:
 		std::vector<Rule> getRules();
+		void removeNonNeededRule(int index);
 };
 
 std::vector<Rule> RuleBase::getRules()
 {
 	return rules;
+}
+
+void RuleBase::removeNonNeededRule(int index)
+{
+	rules.erase(rules.begin() + index);
 }

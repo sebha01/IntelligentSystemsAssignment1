@@ -15,9 +15,10 @@ class InferenceEngine {
 		int validateInput(int minChoice, int maxChoice);
 		void resetChoice();
 		void fireQuestion();
-		void traceStep();
+		std::string traceStep();
 		void conflictRes();
 		void askQuestion(std::string questionName);
+		RuleBase matchRules();
 };
 
 bool InferenceEngine::getCanExit()
@@ -56,15 +57,29 @@ void InferenceEngine::fireQuestion()
 {
 	if (wM.getFactData().empty())
 	{
-		askQuestion("customer");
+		askQuestion("customers");
 	}
-
-	traceStep();
+	else
+	{
+		askQuestion(traceStep());
+	}
 }
 
-void InferenceEngine::traceStep()
+std::string InferenceEngine::traceStep()
 {
-	
+	RuleBase candidateRules = matchRules();
+
+	Rule chosenRule = candidateRules.getRules()[0];
+
+	for (int i = 0; i < chosenRule.conditions.size(); i++)
+	{
+		if (!wM.isFactInWM(chosenRule.conditions[i].factName))
+		{
+			return chosenRule.conditions[i].factName;
+		}
+	}
+
+	return "";
 }
 
 void InferenceEngine::conflictRes()
@@ -82,4 +97,13 @@ void InferenceEngine::askQuestion(std::string questionName)
 			validateInput(q.choiceNumbers[i].first, q.choiceNumbers[i].second);
 		}
 	}
+}
+
+RuleBase InferenceEngine::matchRules()
+{
+	RuleBase matchingRules;
+
+
+
+	return matchingRules;
 }
