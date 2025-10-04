@@ -20,17 +20,17 @@ class Questions {
 public:
 	std::vector<std::pair<std::string, std::string>> questions = {
 		{"customers", "How many customers are in the restaurant?"},
-		{"waitTime", "How long is the waiting time before being seated?"},
+		{"waitTime", "How long is the waiting time before being seated in minutes?"},
 		{"hungry","Are you hungry?"},
 		{"alternativeRestaurant", "Are there alternative restaurants you can go to nearby?"},
 		{"reservation", "Do you have a reservation with the restaurant?"},
 		{"bar", "Does the restaurant have a bar?"},
-		{"rainy", "Is it a rainy day?"},
+		{"raining", "Is it a rainy day?"},
 		{"popularDay", "Is it one of the restaurants popular days?"},
 	};
 	std::vector<std::vector<std::string>> answers = {
 		{"A few", "Some", "Full of customers"},
-		{"More than 60 minutes", "Between 31 and 60 minutes", "Between 10 and 30 minutes", "Less than 10 minutes"},
+		{">60", "31-60", "10-30", "<10"},
 		{"Yes", "No"},
 		{"Yes", "No"},
 		{"Yes", "No"},

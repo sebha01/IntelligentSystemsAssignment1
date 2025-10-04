@@ -8,81 +8,75 @@ class RuleBase {
 		{
 			//Few customers so leave
 			{
-				{{"customers", "few"}},
+				{{"customers", "A few"}},
 				LEAVE
 			}, 
 			//Some customers so wait
 			{
-				{{"customers", "some"}},
+				{{"customers", "Some"}},
 				WAIT
 			},
 			//Full of customers, waiting time greater than 60 mins so leave
 			{
-				{{"customers", "full"}, {"waitTime", ">60"}},
+				{{"customers", "Full of customers"}, {"waitTime", ">60"}},
 				LEAVE
 			},
 			//Full of customers, waiting time 31-60 mins, alternative restaurant yes, so leave
 			{
-				{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "yes"}},
+				{{"customers", "Full of customers"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "Yes"}},
 				LEAVE
 			},
 			//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation no, bar no, so leave
 			{
-				{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "no"}, { "bar", "no" }},
+				{{"customers", "Full of customers"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "No"}, {"reservation", "No"}, { "bar", "No" }},
 				LEAVE
 			},
 			//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation no, bar yes, so wait
 			{
-				{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "no"}, {"bar", "yes"}},
+				{{"customers", "Full of customers"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "No"}, {"reservation", "No"}, {"bar", "Yes"}},
 				WAIT
 			},
 			//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation yes, popular day no, so leave
 			{
-				{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "yes"}, {"popularDay", "no"}},
+				{{"customers", "Full of customers"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "No"}, {"reservation", "Yes"}, {"popularDay", "No"}},
 				LEAVE
 			},
 			//Full of customers, waiting time 31-60 mins, alternative restaurant no, reservation yes, popular day yes, so wait
 			{
-				{{"customers", "full"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "no"}, {"reservation", "yes"}, {"popularDay", "yes"}},
+				{{"customers", "Full of customers"}, {"waitTime", "31-60"}, {"alternativeRestaurant", "No"}, {"reservation", "Yes"}, {"popularDay", "Yes"}},
 				WAIT
 			},
 			//Full of customers, waiting time 10-30 mins, hungry no, so wait
 			{
-				{{"customers", "full"}, {"waitTime", "10-30"}, {"hungry", "no"}},
+				{{"customers", "Full of customers"}, {"waitTime", "10-30"}, {"hungry", "No"}},
 				WAIT
 			},
 			//Full of customers, waiting time 10-30 mins, hungry yes, alternative no, so wait
 			{
-				{{"customers", "full"}, {"waitTime", "10-30"}, {"hungry", "yes"}, {"alternativeRestaurant", "no"}},
+				{{"customers", "Full of customers"}, {"waitTime", "10-30"}, {"hungry", "Yes"}, {"alternativeRestaurant", "No"}},
 				WAIT
 			},
 			//Full of customers, waiting time 10-30 mins, hungry yes, alternative yes, raining yes, so wait
 			{
-				{{"customers", "full"}, {"waitTime", "10-30"}, {"hungry", "yes"}, {"alternativeRestaurant", "yes"}, {"raining", "yes"}},
+				{{"customers", "Full of customers"}, {"waitTime", "10-30"}, {"hungry", "Yes"}, {"alternativeRestaurant", "Yes"}, {"raining", "Yes"}},
 				WAIT
 			},
 			//Full of customers, waiting time 10-30 mins, hungry yes, alternative yes, raining no, so leave
 			{
-				{{"customers", "full"}, {"waitTime", "10-30"}, {"hungry", "yes"}, {"alternativeRestaurant", "yes"}, {"raining", "no"}},
+				{{"customers", "Full of customers"}, {"waitTime", "10-30"}, {"hungry", "Yes"}, {"alternativeRestaurant", "Yes"}, {"raining", "No"}},
 				LEAVE
 			},
 			//Full of customers, waiting time less than 10 mins so wait
 			{
-				{{"customers", "full"}, {"waitTime", "<10"}},
+				{{"customers", "Full of customers"}, {"waitTime", "<10"}},
 				WAIT
 			}
 		};
 	public:
 		std::vector<Rule> getRules();
-		void removeNonNeededRule(int index);
 };
 
 std::vector<Rule> RuleBase::getRules()
 {
 	return rules;
-}
-
-void RuleBase::removeNonNeededRule(int index)
-{
-	rules.erase(rules.begin() + index);
 }

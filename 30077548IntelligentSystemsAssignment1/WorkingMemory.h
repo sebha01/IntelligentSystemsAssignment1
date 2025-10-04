@@ -10,7 +10,6 @@ class WorkingMemory {
 		void addFact(Fact f);
 		bool isFactInWM(std::string name);
 		std::string getFactValue(std::string name);
-		bool decisionReached();
 		std::vector<Fact> getFactData();
 };
 
@@ -48,19 +47,6 @@ std::string WorkingMemory::getFactValue(std::string name)
 			return facts[i].factValue;
 		}
 	}
-}
-
-bool WorkingMemory::decisionReached()
-{
-	for (int i = 0; i < facts.size(); i++)
-	{
-		if (facts[i].factName == "decision")
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 std::vector<Fact> WorkingMemory::getFactData()
