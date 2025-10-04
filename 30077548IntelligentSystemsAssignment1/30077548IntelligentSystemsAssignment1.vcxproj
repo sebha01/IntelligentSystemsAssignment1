@@ -134,6 +134,7 @@
     <ClInclude Include="GlobalHeader.h" />
     <ClInclude Include="Fact.h" />
     <ClInclude Include="InferenceEngine.h" />
+    <ClInclude Include="Questions.h" />
     <ClInclude Include="Rule.h" />
     <ClInclude Include="RuleBase.h" />
     <ClInclude Include="WorkingMemory.h" />

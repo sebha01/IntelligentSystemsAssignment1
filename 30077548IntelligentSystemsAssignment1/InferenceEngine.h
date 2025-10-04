@@ -1,6 +1,7 @@
 #pragma once
 #include "WorkingMemory.h"
 #include "RuleBase.h"
+#include "Questions.h"
 
 class InferenceEngine {
 	private:
