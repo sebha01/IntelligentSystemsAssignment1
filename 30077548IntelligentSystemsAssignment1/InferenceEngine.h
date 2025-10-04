@@ -48,10 +48,9 @@ void InferenceEngine::setPlayAgain(bool var)
 	this->playAgain = var;
 }
 
-
 int InferenceEngine::validateInput(int minChoice, int maxChoice)
 {
-	//got this validation from my pokemon game year 1 assignment, if you need me to show you ask me
+	//got this validation from my pokemon game year 1 and 2 assignments, if you need me to show you ask me
 	while (!(std::cin >> choice) || (choice < minChoice || choice > maxChoice))
 	{
 		std::cout << std::endl << "Invalid input, please choose a number between " << minChoice << " and " << maxChoice << " -> ";
@@ -66,7 +65,7 @@ int InferenceEngine::validateInput(int minChoice, int maxChoice)
 
 void InferenceEngine::resetChoice()
 {
-	//Simple but easier to type out a fuction for finding bugs later than just a line
+	//Simple but easier to type out a function for finding bugs later than just a line
 	choice = 0;
 }
 
@@ -115,13 +114,14 @@ void InferenceEngine::fireQuestion()
 	}
 
 	std::string nextQuestionName = traceStep();
+
 	if (!nextQuestionName.empty())
 	{
 		askQuestion(nextQuestionName);
 	}
 	else
 	{
-		//If all else fails somehow need to just abort
+		//If all else fails somehow we need to just abort so nothing crashes
 		std::cout << std::endl << "Couldn't make a decision based on the answers you have provided. Exiting program shortly..." << std::endl;
 		setCanExit(true);
 	}
@@ -268,22 +268,22 @@ void InferenceEngine::askToPlayAgain()
 
 	switch (choice)
 	{
-	case 1:
-		std::cout << std::endl << "Great let's play again, reloading expert system..." << std::endl;
-		wM.clearFacts();
-		setPlayAgain(true);
-		setCanExit(false);
-		break;
-	case 2:
-		std::cout << std::endl << "No problem, exiting program now..." << std::endl;
-		std::cout << std::endl << "Thank you for enquiring the wait for table expert system today, goodbye!" << std::endl << std::endl;
-		setPlayAgain(false);
-		setCanExit(true);
-		break;
-	default:
-		std::cout << "Something went wrong here, exiting program..." << std::endl;
-		setPlayAgain(false);
-		setCanExit(true);
-		break;
+		case 1:
+			std::cout << std::endl << "Great let's play again, reloading expert system..." << std::endl;
+			wM.clearFacts();
+			setPlayAgain(true);
+			setCanExit(false);
+			break;
+		case 2:
+			std::cout << std::endl << "No problem, exiting program now..." << std::endl;
+			std::cout << std::endl << "Thank you for enquiring the wait for table expert system today, goodbye!" << std::endl << std::endl;
+			setPlayAgain(false);
+			setCanExit(true);
+			break;
+		default:
+			std::cout << "Something went wrong here, exiting program..." << std::endl;
+			setPlayAgain(false);
+			setCanExit(true);
+			break;
 	}
 }
