@@ -22,6 +22,7 @@ class InferenceEngine {
 		std::vector<Rule> matchRules();
 		bool ruleReadyToFire(Rule& outRule);
 		void presentDecision(Rule& r);
+		Rule conflictResolution(std::vector<Rule>& candidates);
 };
 
 bool InferenceEngine::getCanExit()
@@ -114,16 +115,25 @@ std::string InferenceEngine::traceStep()
 {
 	std::vector<Rule> candidateRules = matchRules();
 
-	Rule chosenRule = candidateRules[0];
-
-	for (int i = 0; i < chosenRule.conditions.size(); i++)
+	if (candidateRules.empty())
 	{
-		if (!wM.isFactInWM(chosenRule.conditions[i].factName))
+		return "";
+	}
+	else
+	{
+		Rule chosenRule = conflictResolution(candidateRules);
+
+		for (int i = 0; i < chosenRule.conditions.size(); i++)
 		{
-			return chosenRule.conditions[i].factName;
+			if (!wM.isFactInWM(chosenRule.conditions[i].factName))
+			{
+				return chosenRule.conditions[i].factName;
+			}
 		}
+
 	}
 
+	//If candidate rules is not empty but all the conditions have been met within the rules that are present then return to present the decision
 	return "";
 }
 
@@ -167,4 +177,19 @@ bool InferenceEngine::ruleReadyToFire(Rule& outRule)
 void InferenceEngine::presentDecision(Rule& r)
 {
 
+}
+
+Rule InferenceEngine::conflictResolution(std::vector<Rule>& candidates)
+{
+	int largestIndex = 0;
+
+	for (int i = 0; i < candidates.size(); i++)
+	{
+		if (candidates[i].conditions.size() > candidates[largestIndex].conditions.size())
+		{
+			largestIndex = i;
+		}
+	}
+
+	return candidates[largestIndex];
 }
