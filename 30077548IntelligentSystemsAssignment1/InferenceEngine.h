@@ -62,12 +62,14 @@ void InferenceEngine::askQuestion(std::string questionName)
 	{
 		if (q.questions[i].first == questionName)
 		{
-			std::cout << q.questions[i].second << std::endl;
+			std::cout << std::endl << q.questions[i].second << std::endl;
 
 			for (int x = 0; x < q.answers[i].size(); x++)
 			{
 				std::cout << x + 1 << " ->\t" << q.answers[i][x] << std::endl;
 			}
+
+			std::cout << std::endl << "Your choice -> ";
 
 			choice = validateInput(q.choiceNumbers[i].first, q.choiceNumbers[i].second);
 
@@ -141,10 +143,11 @@ std::vector<Rule> InferenceEngine::matchRules()
 {
 	std::vector<Rule> matchingRules;
 	std::vector<Rule>& rules = rB.getRules();
+	bool isMatching = true;
 
 	for (int i = 0; i < rules.size(); i++)
 	{
-		bool isMatching = true;
+		isMatching = true;
 
 		for (int j = 0; j < rules[i].conditions.size(); j++)
 		{
@@ -171,12 +174,59 @@ std::vector<Rule> InferenceEngine::matchRules()
 
 bool InferenceEngine::ruleReadyToFire(Rule& outRule)
 {
+	std::vector<Rule>& rules = rB.getRules();
+	bool ruleIsSatisfied = true;
 
+	for (int i = 0; i < rules.size(); i++)
+	{
+		ruleIsSatisfied = true;
+
+		for (int j = 0; j < rules[i].conditions.size(); j++)
+		{
+			//Easier for looking through the code and seeing what is going on than repeatedly long names
+			Fact& currentCondition = rules[i].conditions[j];
+
+			if (!wM.isFactInWM(currentCondition.factName) || wM.getFactValue(currentCondition.factName) != currentCondition.factValue)
+			{
+				//No need to continue looking through this rule if it does not match, move onto the next one
+				ruleIsSatisfied = false;
+				break;
+			}
+		}
+
+		if (ruleIsSatisfied)
+		{
+			outRule = rules[i];
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void InferenceEngine::presentDecision(Rule& r)
 {
+	std::cout << std::endl << "A decision has been reached from the facts you have given." << std::endl;
+	std::cout << "The decision is that you should " << (r.decision == WAIT ? "wait for a seat" : "leave the restaurant") << std::endl << std::endl;
 
+	std::cout << "The reasoning for this is because of these facts you gave me ->" << std::endl;
+
+	for (int i = 0; i < r.conditions.size(); i++)
+	{
+		switch (i)
+		{
+			case 0:
+				std::cout << r.conditions[i].factValue << " " << r.conditions[i].factName << " were in the restaurant." << std::endl;
+				break;
+			default:
+				std::cout << " -> " << r.conditions[i].factName << " was " << r.conditions[i].factValue << std::endl;
+				break;
+		}
+	}
+
+	std::cout << std::endl << "Thank you for enquiring the wait for table expert system today, goodbye!" << std::endl << std::endl;
+
+	setCanExit(true);
 }
 
 Rule InferenceEngine::conflictResolution(std::vector<Rule>& candidates)
