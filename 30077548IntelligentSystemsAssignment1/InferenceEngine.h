@@ -9,20 +9,22 @@ class InferenceEngine {
 		Questions q;
 		int choice = 0;
 		bool canExit = false;
+		bool playAgain = true;
 	public:
 		bool getCanExit();
 		void setCanExit(bool var);
+		bool getPlayAgain();
+		void setPlayAgain(bool var);
 		int validateInput(int minChoice, int maxChoice);
 		void resetChoice();
 		void askQuestion(std::string questionName);
-
 		void fireQuestion();
 		std::string traceStep();
-		
 		std::vector<Rule> matchRules();
 		bool ruleReadyToFire(Rule& outRule);
 		void presentDecision(Rule& r);
 		Rule conflictResolution(std::vector<Rule>& candidates);
+		void askToPlayAgain();
 };
 
 bool InferenceEngine::getCanExit()
@@ -34,6 +36,17 @@ void InferenceEngine::setCanExit(bool var)
 {
 	this->canExit = var;
 }
+
+bool InferenceEngine::getPlayAgain()
+{
+	return playAgain;
+}
+
+void InferenceEngine::setPlayAgain(bool var)
+{
+	this->playAgain = var;
+}
+
 
 int InferenceEngine::validateInput(int minChoice, int maxChoice)
 {
@@ -224,9 +237,7 @@ void InferenceEngine::presentDecision(Rule& r)
 		}
 	}
 
-	std::cout << std::endl << "Thank you for enquiring the wait for table expert system today, goodbye!" << std::endl << std::endl;
-
-	setCanExit(true);
+	askToPlayAgain();
 }
 
 Rule InferenceEngine::conflictResolution(std::vector<Rule>& candidates)
@@ -242,4 +253,33 @@ Rule InferenceEngine::conflictResolution(std::vector<Rule>& candidates)
 	}
 
 	return candidates[largestIndex];
+}
+
+void InferenceEngine::askToPlayAgain()
+{
+	std::cout << std::endl << "Would you like to play again?" << std::endl;
+	std::cout << "1| Yes" << std::endl << "2| No" << std::endl << std::endl << "Your choice -> ";
+
+	choice = validateInput(1, 2);
+
+	switch (choice)
+	{
+	case 1:
+		std::cout << std::endl << "Great let's play again, reloading expert system..." << std::endl;
+		wM.clearFacts();
+		setPlayAgain(true);
+		setCanExit(false);
+		break;
+	case 2:
+		std::cout << std::endl << "No problem, exiting program now..." << std::endl;
+		std::cout << std::endl << "Thank you for enquiring the wait for table expert system today, goodbye!" << std::endl << std::endl;
+		setPlayAgain(false);
+		setCanExit(true);
+		break;
+	default:
+		std::cout << "Something went wrong here, exiting program..." << std::endl;
+		setPlayAgain(false);
+		setCanExit(true);
+		break;
+	}
 }

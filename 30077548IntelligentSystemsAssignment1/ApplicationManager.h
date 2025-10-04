@@ -41,7 +41,7 @@ void ApplicationManager::showTitle()
 void ApplicationManager::update()
 {
 	//continue to loop until the user decides to exit
-	while (iE.getCanExit() == false)
+	while (iE.getCanExit() == false && iE.getPlayAgain() == true)
 	{
 		iE.fireQuestion();
 	}

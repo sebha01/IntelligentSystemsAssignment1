@@ -11,6 +11,7 @@ class WorkingMemory {
 		bool isFactInWM(std::string name);
 		std::string getFactValue(std::string name);
 		std::vector<Fact> getFactData();
+		void clearFacts();
 };
 
 void WorkingMemory::addFact(Fact f)
@@ -52,4 +53,9 @@ std::string WorkingMemory::getFactValue(std::string name)
 std::vector<Fact> WorkingMemory::getFactData()
 {
 	return facts;
+}
+
+void WorkingMemory::clearFacts()
+{
+	facts.clear();
 }
