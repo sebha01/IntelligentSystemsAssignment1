@@ -18,7 +18,7 @@ class InferenceEngine {
 		std::string traceStep();
 		void conflictRes();
 		void askQuestion(std::string questionName);
-		RuleBase matchRules();
+		std::vector<Rule> matchRules();
 };
 
 bool InferenceEngine::getCanExit()
@@ -112,9 +112,9 @@ void InferenceEngine::askQuestion(std::string questionName)
 	}
 }
 
-RuleBase InferenceEngine::matchRules()
+std::vector<Rule> InferenceEngine::matchRules()
 {
-	RuleBase matchingRules;
+	std::vector<Rule> matchingRules;
 
 
 
