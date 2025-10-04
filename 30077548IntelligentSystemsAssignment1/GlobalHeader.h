@@ -28,15 +28,15 @@ public:
 		{"rainy", "Is it a rainy day?"},
 		{"popularDay", "Is it one of the restaurants popular days?"},
 	};
-	std::vector<std::string> answers = {
-		"\n1 | A few\n2 | Some\n3 | Full of customers\n",
-		"\n1 | More than 60 minutes\n2 | Between 31 and 60 minutes\n3 | Between 10 and 30 minutes ? \n4 | Less than 10 minutes\n",
-		"\n1| Yes\n2| No\n",
-		"\n1| Yes\n2| No\n",
-		"\n1| Yes\n2| No\n",
-		"\n1| Yes\n2| No\n",
-		"\n1| Yes\n2| No\n",
-		"\n1| Yes\n2| No\n",
+	std::vector<std::vector<std::string>> answers = {
+		{"A few", "Some", "Full of customers"},
+		{"More than 60 minutes", "Between 31 and 60 minutes", "Between 10 and 30 minutes", "Less than 10 minutes"},
+		{"Yes", "No"},
+		{"Yes", "No"},
+		{"Yes", "No"},
+		{"Yes", "No"},
+		{"Yes", "No"},
+		{"Yes", "No"}
 	};
 	std::vector<std::pair<int, int>> choiceNumbers =
 	{

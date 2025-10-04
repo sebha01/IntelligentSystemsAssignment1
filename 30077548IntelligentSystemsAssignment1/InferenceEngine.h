@@ -93,8 +93,21 @@ void InferenceEngine::askQuestion(std::string questionName)
 	{
 		if (q.questions[i].first == questionName)
 		{
-			std::cout << q.questions[i].second << q.answers[i];
-			validateInput(q.choiceNumbers[i].first, q.choiceNumbers[i].second);
+			std::cout << q.questions[i].second << std::endl;
+			
+			for (int x = 0; x < q.answers[i].size(); x++)
+			{
+				std::cout << x + 1 << " ->\t" << q.answers[i][x] << std::endl;
+			}
+
+			choice = validateInput(q.choiceNumbers[i].first, q.choiceNumbers[i].second);
+
+			Fact f(q.questions[i].first, q.answers[i][choice - 1]);
+
+			wM.addFact(f);
+			
+			//break out of loop once done
+			return;
 		}
 	}
 }
