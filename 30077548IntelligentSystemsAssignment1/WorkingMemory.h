@@ -48,6 +48,9 @@ std::string WorkingMemory::getFactValue(std::string name)
 			return facts[i].factValue;
 		}
 	}
+
+	//If all else fails although this will never happen
+	return "";
 }
 
 std::vector<Fact> WorkingMemory::getFactData()

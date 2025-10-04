@@ -222,17 +222,20 @@ void InferenceEngine::presentDecision(Rule& r)
 	std::cout << std::endl << "A decision has been reached from the facts you have given." << std::endl;
 	std::cout << "The decision is that you should " << (r.decision == WAIT ? "wait for a seat" : "leave the restaurant") << std::endl << std::endl;
 
-	std::cout << "The reasoning for this is because of these facts you gave me ->" << std::endl;
+	std::cout << "The reasoning for this is because of these facts you gave me:" << std::endl;
 
 	for (int i = 0; i < r.conditions.size(); i++)
 	{
 		switch (i)
 		{
 			case 0:
-				std::cout << r.conditions[i].factValue << " " << r.conditions[i].factName << " were in the restaurant." << std::endl;
+				std::cout << "-> " << r.conditions[i].factValue << " in the restaurant." << std::endl;
+				break;
+			case 1:
+				std::cout << "-> " << r.conditions[i].factValue << " was the " << r.conditions[i].factName << " to be seated." << std::endl;
 				break;
 			default:
-				std::cout << " -> " << r.conditions[i].factName << " was " << r.conditions[i].factValue << std::endl;
+				std::cout << "-> " << r.conditions[i].factName << "?  -> " << r.conditions[i].factValue << std::endl;
 				break;
 		}
 	}
