@@ -14,11 +14,14 @@ class InferenceEngine {
 		void setCanExit(bool var);
 		int validateInput(int minChoice, int maxChoice);
 		void resetChoice();
+		void askQuestion(std::string questionName);
+
 		void fireQuestion();
 		std::string traceStep();
-		void conflictRes();
-		void askQuestion(std::string questionName);
+		
 		std::vector<Rule> matchRules();
+		bool ruleReadyToFire(Rule& outRule);
+		void presentDecision(Rule& r);
 };
 
 bool InferenceEngine::getCanExit()
@@ -46,45 +49,10 @@ int InferenceEngine::validateInput(int minChoice, int maxChoice)
 	return choice;
 }
 
-
 void InferenceEngine::resetChoice()
 {
 	//Simple but easier to type out a fuction for finding bugs later than just a line
 	choice = 0;
-}
-
-void InferenceEngine::fireQuestion()
-{
-	if (wM.getFactData().empty())
-	{
-		askQuestion("customers");
-	}
-	else
-	{
-		askQuestion(traceStep());
-	}
-}
-
-std::string InferenceEngine::traceStep()
-{
-	RuleBase candidateRules = matchRules();
-
-	Rule chosenRule = candidateRules.getRules()[0];
-
-	for (int i = 0; i < chosenRule.conditions.size(); i++)
-	{
-		if (!wM.isFactInWM(chosenRule.conditions[i].factName))
-		{
-			return chosenRule.conditions[i].factName;
-		}
-	}
-
-	return "";
-}
-
-void InferenceEngine::conflictRes()
-{
-
 }
 
 void InferenceEngine::askQuestion(std::string questionName)
@@ -112,11 +80,91 @@ void InferenceEngine::askQuestion(std::string questionName)
 	}
 }
 
+void InferenceEngine::fireQuestion()
+{
+	if (wM.getFactData().empty())
+	{
+		askQuestion("customers");
+		return;
+	}
+	
+	Rule satisfiedRule;
+
+	if (ruleReadyToFire(satisfiedRule))
+	{
+		//We want to make sure the loop definitely terminates even though setCanExit is called within presentDecision
+		presentDecision(satisfiedRule);
+		return;
+	}
+
+	std::string nextQuestionName = traceStep();
+	if (!nextQuestionName.empty())
+	{
+		askQuestion(nextQuestionName);
+	}
+	else
+	{
+		//If all else fails somehow need to just abort
+		std::cout << std::endl << "Couldn't make a decision based on the answers you have provided. Exiting program shortly..." << std::endl;
+		setCanExit(true);
+	}
+}
+
+std::string InferenceEngine::traceStep()
+{
+	std::vector<Rule> candidateRules = matchRules();
+
+	Rule chosenRule = candidateRules[0];
+
+	for (int i = 0; i < chosenRule.conditions.size(); i++)
+	{
+		if (!wM.isFactInWM(chosenRule.conditions[i].factName))
+		{
+			return chosenRule.conditions[i].factName;
+		}
+	}
+
+	return "";
+}
+
 std::vector<Rule> InferenceEngine::matchRules()
 {
 	std::vector<Rule> matchingRules;
+	std::vector<Rule>& rules = rB.getRules();
 
+	for (int i = 0; i < rules.size(); i++)
+	{
+		bool isMatching = true;
 
+		for (int j = 0; j < rules[i].conditions.size(); j++)
+		{
+			//Easier for looking through the code and seeing what is going on than repeatedly long names
+			Fact& currentCondition = rules[i].conditions[j];
+
+			if (wM.isFactInWM(currentCondition.factName) && wM.getFactValue(currentCondition.factName) != currentCondition.factValue)
+			{
+				//No need to continue looking through this rule if it does not match, move onto the next one
+				isMatching = false;
+				break;
+			}
+		}
+
+		if (isMatching)
+		{
+			matchingRules.push_back(rules[i]);
+		}
+		
+	}
 
 	return matchingRules;
+}
+
+bool InferenceEngine::ruleReadyToFire(Rule& outRule)
+{
+
+}
+
+void InferenceEngine::presentDecision(Rule& r)
+{
+
 }

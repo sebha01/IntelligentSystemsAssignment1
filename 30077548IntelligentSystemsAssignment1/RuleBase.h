@@ -73,10 +73,10 @@ class RuleBase {
 			}
 		};
 	public:
-		std::vector<Rule> getRules();
+		std::vector<Rule>& getRules();
 };
 
-std::vector<Rule> RuleBase::getRules()
+std::vector<Rule>& RuleBase::getRules()
 {
 	return rules;
 }

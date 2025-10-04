@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include <utility>
+#include <algorithm>
 
 enum Decision {
 	WAIT,
