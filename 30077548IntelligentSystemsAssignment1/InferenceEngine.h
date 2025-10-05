@@ -12,17 +12,20 @@ class InferenceEngine {
 		bool canExit = false;
 		bool playAgain = true;
 	public:
+		//getters and setters for main loop
 		bool getCanExit();
 		void setCanExit(bool var);
 		bool getPlayAgain();
 		void setPlayAgain(bool var);
+		//Input validation function and reset choice
 		int validateInput(int minChoice, int maxChoice);
 		void resetChoice();
+		//Functions for main logic of inference engine
 		void askQuestion(std::string questionName);
 		void fireQuestion();
 		std::string traceStep();
 		std::vector<Rule> matchRules();
-		bool ruleReadyToFire(Rule& outRule);
+		bool ruleReadyToFire(Rule& r);
 		void presentDecision(Rule& r);
 		Rule conflictResolution(std::vector<Rule>& candidates);
 		void askToPlayAgain();
@@ -66,31 +69,38 @@ int InferenceEngine::validateInput(int minChoice, int maxChoice)
 void InferenceEngine::resetChoice()
 {
 	//Simple but easier to type out a function for finding bugs later than just a line
+	//Had it happen in a past assignment and it was just easier to control from one area than multiple
 	choice = 0;
 }
 
 void InferenceEngine::askQuestion(std::string questionName)
 {
+	//Loop through the vector or string pairs to match the questionName passed in as a parameter
+	//To the question name within the vector of questions
 	for (int i = 0; i < q.questions.size(); i++)
 	{
+		//If questionName matches with the name in the vector then display the question to screen
 		if (q.questions[i].first == questionName)
 		{
 			std::cout << std::endl << q.questions[i].second << std::endl;
 
+			//Display the answers appropriately using the answers variable, as we have the index it is easy to get 
 			for (int x = 0; x < q.answers[i].size(); x++)
 			{
 				std::cout << x + 1 << " ->\t" << q.answers[i][x] << std::endl;
 			}
 
+			//Ask for the user choice
 			std::cout << std::endl << "Your choice -> ";
-
+			//Validate input from user
 			choice = validateInput(q.choiceNumbers[i].first, q.choiceNumbers[i].second);
-
+			//Use fact constructor with the information obtained
 			Fact f(q.questions[i].first, q.answers[i][choice - 1]);
-
+			//Add that fact to working memory
 			wM.addFact(f);
-
+			//Reset the choice so that it doesn't cause issues on the next question asked
 			resetChoice();
+			//Return if the question has been found and asked so it doesn't continue looping unecessarily
 			return;
 		}
 	}
@@ -166,9 +176,11 @@ std::vector<Rule> InferenceEngine::matchRules()
 		for (int j = 0; j < rules[i].conditions.size(); j++)
 		{
 			//Easier for looking through the code and seeing what is going on than repeatedly long names
+			//Passing in by reference so it doesn't make a copy everytime
 			Fact& currentCondition = rules[i].conditions[j];
 
-			if (wM.isFactInWM(currentCondition.factName) && wM.getFactValue(currentCondition.factName) != currentCondition.factValue)
+			if (wM.isFactInWM(currentCondition.factName) 
+				&& wM.getFactValue(currentCondition.factName) != currentCondition.factValue)
 			{
 				//No need to continue looking through this rule if it does not match, move onto the next one
 				isMatching = false;
@@ -180,13 +192,12 @@ std::vector<Rule> InferenceEngine::matchRules()
 		{
 			matchingRules.push_back(rules[i]);
 		}
-		
 	}
 
 	return matchingRules;
 }
 
-bool InferenceEngine::ruleReadyToFire(Rule& outRule)
+bool InferenceEngine::ruleReadyToFire(Rule& r)
 {
 	std::vector<Rule>& rules = rB.getRules();
 	bool ruleIsSatisfied = true;
@@ -198,9 +209,11 @@ bool InferenceEngine::ruleReadyToFire(Rule& outRule)
 		for (int j = 0; j < rules[i].conditions.size(); j++)
 		{
 			//Easier for looking through the code and seeing what is going on than repeatedly long names
+			//Don't want to make a copy every time we call this so using a reference
 			Fact& currentCondition = rules[i].conditions[j];
 
-			if (!wM.isFactInWM(currentCondition.factName) || wM.getFactValue(currentCondition.factName) != currentCondition.factValue)
+			if (!wM.isFactInWM(currentCondition.factName) 
+				|| wM.getFactValue(currentCondition.factName) != currentCondition.factValue)
 			{
 				//No need to continue looking through this rule if it does not match, move onto the next one
 				ruleIsSatisfied = false;
@@ -210,7 +223,7 @@ bool InferenceEngine::ruleReadyToFire(Rule& outRule)
 
 		if (ruleIsSatisfied)
 		{
-			outRule = rules[i];
+			r = rules[i];
 			return true;
 		}
 	}

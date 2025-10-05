@@ -25,6 +25,8 @@ void WorkingMemory::addFact(Fact f)
 
 bool WorkingMemory::isFactInWM(std::string name)
 {
+	//Runs a for loop to check if the fact is already in the working memory, 
+	// used to help run traceStep, and find which answer to ask next
 	for (int i = 0; i < facts.size(); i++)
 	{
 		if (facts[i].factName == name)
@@ -38,9 +40,8 @@ bool WorkingMemory::isFactInWM(std::string name)
 
 std::string WorkingMemory::getFactValue(std::string name)
 {
-	//We will always know if a fact is known by isKnownFact 
+	//We will always know if a fact is known by isFactInWM 
 	// function before calling getFactValue so don't need to handle errors
-
 	for (int i = 0; i < facts.size(); i++)
 	{
 		if (facts[i].factName == name)

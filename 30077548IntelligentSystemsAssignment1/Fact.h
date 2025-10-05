@@ -3,10 +3,8 @@
 
 class Fact {
 public:
-	//member variables
 	std::string factName = "";
 	std::string factValue = "";
-
 	//Constructor
 	Fact(std::string name, std::string value)
 	{
@@ -14,7 +12,6 @@ public:
 		this->factValue = value;
 	}
 };
-
 
 /*
 

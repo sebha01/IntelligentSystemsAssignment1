@@ -27,7 +27,7 @@ void ApplicationManager::init()
 
 void ApplicationManager::showTitle()
 {
-	//set the width for the default console window size, hopefully noone maximises the screen
+	//set the width for the title
 	std::cout << "------------------------------------------------------------------------------------------------------------------------" << std::endl;
 	std::cout << std::setw(70) << "-- -- Wait for Table Expert System -- --" << std::endl;
 	std::cout << "------------------------------------------------------------------------------------------------------------------------" << std::endl;
