@@ -330,6 +330,7 @@ void InferenceEngine::askToPlayAgain()
 			std::cout << std::endl << "Great let's play again!" << std::endl;
 			wM.clearFacts();
 			setResetScreen(true);
+			//Probably not needed but just incase anything else changes it to true
 			setCanExit(false);
 			break;
 		case 2:
