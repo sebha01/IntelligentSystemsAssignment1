@@ -108,23 +108,28 @@ void InferenceEngine::askQuestion(std::string questionName)
 
 void InferenceEngine::fireQuestion()
 {
+	//If the workingMemory has no facts ask the first question, no need to trace the step yet
 	if (wM.getFactData().empty())
 	{
 		askQuestion("customers");
 		return;
 	}
-	
+	//Create rule object to store the rule that has been satisfied if one is found
 	Rule satisfiedRule;
-
+	//Check if a rule has been satisfied
 	if (ruleReadyToFire(satisfiedRule))
 	{
+		//If so then present the decision to the user, then ask if the user wants to play again
 		//We want to make sure the loop definitely terminates even though setCanExit is called within presentDecision
 		presentDecision(satisfiedRule);
 		return;
 	}
 
+	//If no rule is satisfied or isn't the first question then trace the next question to ask the user
 	std::string nextQuestionName = traceStep();
 
+	//As long as the questionName doesn't return empty then we can ask the next question
+	//If somehow it does then something went wrong
 	if (!nextQuestionName.empty())
 	{
 		askQuestion(nextQuestionName);
@@ -139,27 +144,32 @@ void InferenceEngine::fireQuestion()
 
 std::string InferenceEngine::traceStep()
 {
+	//Get a list of rules that could possibly be satisfied by the data currently in the working memory
 	std::vector<Rule> candidateRules = matchRules();
 
+	//Make sure the program doesn't crash by returning an empty string if somehow the candidateRules are empty
 	if (candidateRules.empty())
 	{
 		return "";
 	}
 	else
 	{
+		//Apply conflict resolution by specificity, select the rule with the largest number of conditions
 		Rule chosenRule = conflictResolution(candidateRules);
 
+		//Loop through the chosenRule until it finds a fact that is not in the workingMemory
 		for (int i = 0; i < chosenRule.conditions.size(); i++)
 		{
 			if (!wM.isFactInWM(chosenRule.conditions[i].factName))
 			{
+				//Return the question name so the next question can be asked
 				return chosenRule.conditions[i].factName;
 			}
 		}
 
 	}
 
-	//If candidate rules is not empty but all the conditions have been met within the rules that are present then return to present the decision
+	//If something goes wrong just return an empty string
 	return "";
 }
 
