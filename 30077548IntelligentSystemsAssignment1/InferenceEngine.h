@@ -10,14 +10,11 @@ class InferenceEngine {
 		Questions q;
 		int choice = 0;
 		bool canExit = false;
-		bool playAgain = true;
 		bool resetScreen = false;
 	public:
 		//getters and setters for main loop
 		bool getCanExit();
 		void setCanExit(bool var);
-		bool getPlayAgain();
-		void setPlayAgain(bool var);
 		bool getResetScreen();
 		void setResetScreen(bool var);
 		//Input validation function and reset choice
@@ -42,16 +39,6 @@ bool InferenceEngine::getCanExit()
 void InferenceEngine::setCanExit(bool var)
 {
 	this->canExit = var;
-}
-
-bool InferenceEngine::getPlayAgain()
-{
-	return playAgain;
-}
-
-void InferenceEngine::setPlayAgain(bool var)
-{
-	this->playAgain = var;
 }
 
 bool InferenceEngine::getResetScreen()
@@ -343,20 +330,17 @@ void InferenceEngine::askToPlayAgain()
 			std::cout << std::endl << "Great let's play again!" << std::endl;
 			wM.clearFacts();
 			setResetScreen(true);
-			setPlayAgain(true);
 			setCanExit(false);
 			break;
 		case 2:
 			//exits the program after letting the user know 
 			std::cout << std::endl << "No problem, exiting program now..." << std::endl;
 			std::cout << std::endl << "Thank you for enquiring the wait for table expert system today, goodbye!" << std::endl << std::endl;
-			setPlayAgain(false);
 			setCanExit(true);
 			break;
 		default:
 			//If an error were to ever happen then it would just exit the program
 			std::cout << "Something went wrong here, exiting program..." << std::endl;
-			setPlayAgain(false);
 			setCanExit(true);
 			break;
 	}
