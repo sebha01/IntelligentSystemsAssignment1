@@ -175,20 +175,28 @@ std::string InferenceEngine::traceStep()
 
 std::vector<Rule> InferenceEngine::matchRules()
 {
+	//Create vector of rules to store the matching rules inside
 	std::vector<Rule> matchingRules;
+	//Cuts down the length of variables and also only gets a refer
 	std::vector<Rule>& rules = rB.getRules();
+	//Initialise variable here and control value within loop
 	bool isMatching = true;
 
+	//Loop through the list of rules
 	for (int i = 0; i < rules.size(); i++)
 	{
 		isMatching = true;
 
+		//For each rule within the list of rules, check the conditions to make sure that the facts in the
+		//working memory match up with the facts within those rules
 		for (int j = 0; j < rules[i].conditions.size(); j++)
 		{
 			//Easier for looking through the code and seeing what is going on than repeatedly long names
 			//Passing in by reference so it doesn't make a copy everytime
 			Fact& currentCondition = rules[i].conditions[j];
 
+			//If the fact from the working memory does not match with one of the facts within the rule
+			//Then it is disregarded and moves onto the next iteration
 			if (wM.isFactInWM(currentCondition.factName) 
 				&& wM.getFactValue(currentCondition.factName) != currentCondition.factValue)
 			{
@@ -198,6 +206,8 @@ std::vector<Rule> InferenceEngine::matchRules()
 			}
 		}
 
+		//If isMatching is still true meaning that the rule meets the criteria  then
+		// it gets pushed back into the matchingRules vector
 		if (isMatching)
 		{
 			matchingRules.push_back(rules[i]);
@@ -209,13 +219,20 @@ std::vector<Rule> InferenceEngine::matchRules()
 
 bool InferenceEngine::ruleReadyToFire(Rule& r)
 {
+	//Call a reference to the rules within rulebase, 
+	//saves having to repeatedly call it and the length of variable names
 	std::vector<Rule>& rules = rB.getRules();
+	//boolean to control whether a rule has been satisfied
 	bool ruleIsSatisfied = true;
 
+	//Loop through vector of rules
 	for (int i = 0; i < rules.size(); i++)
 	{
+		//reset boolean value on every iteration of loop
 		ruleIsSatisfied = true;
 
+		//Loop through condition within the rule, check for if rule does not match and change boolean to false
+		//That way an unsatisfied rule does not get fired
 		for (int j = 0; j < rules[i].conditions.size(); j++)
 		{
 			//Easier for looking through the code and seeing what is going on than repeatedly long names
@@ -231,6 +248,9 @@ bool InferenceEngine::ruleReadyToFire(Rule& r)
 			}
 		}
 
+
+		//if boolean still true then return as true and set the Rule object passed in as a parameter 
+		// as the current index of the loop
 		if (ruleIsSatisfied)
 		{
 			r = rules[i];
@@ -243,22 +263,27 @@ bool InferenceEngine::ruleReadyToFire(Rule& r)
 
 void InferenceEngine::presentDecision(Rule& r)
 {
+	//First couple sentences for what is the end area
 	std::cout << std::endl << "A decision has been reached from the facts you have given." << std::endl;
 	std::cout << "The decision is that you should " << (r.decision == WAIT ? "wait for a seat" : "leave the restaurant") << std::endl << std::endl;
-
 	std::cout << "The reasoning for this is because of these facts you gave me:" << std::endl;
 
+	//Loop through the conditions of the satisfied rule to print out the #
+	// reasoning for why the expert system came to that conclusion
 	for (int i = 0; i < r.conditions.size(); i++)
 	{
 		switch (i)
 		{
 			case 0:
+				//Make a sentance of the number of customers within the restaurant
 				std::cout << "-> " << r.conditions[i].factValue << " in the restaurant." << std::endl;
 				break;
 			case 1:
+				//Switched up the wording so it will make more sense when displaying the wait time
 				std::cout << "-> " << r.conditions[i].factValue << " was the " << r.conditions[i].factName << " to be seated." << std::endl;
 				break;
 			default:
+				//Rest of results will just display as the title and whether it was yes or no
 				std::cout << "-> " << r.conditions[i].factName << "?  -> " << r.conditions[i].factValue << std::endl;
 				break;
 		}
@@ -269,41 +294,53 @@ void InferenceEngine::presentDecision(Rule& r)
 
 Rule InferenceEngine::conflictResolution(std::vector<Rule>& candidates)
 {
+	//Conflict resolution by specificity, by choosing this the system will tend to ask more
+	//Informative questions reducing unecessary dialogue by being able to cut down the amount of questions quickly
+	
+	//Set the largest index as the first index
 	int largestIndex = 0;
 
+	//Loop through vector of candidate rules to find which rule has the largest amount of conditions
 	for (int i = 0; i < candidates.size(); i++)
 	{
+		//set the next largest index if value at current index of the loop is larger
 		if (candidates[i].conditions.size() > candidates[largestIndex].conditions.size())
 		{
 			largestIndex = i;
 		}
 	}
 
+	//return the rule with the biggest amount of conditions
 	return candidates[largestIndex];
 }
 
 void InferenceEngine::askToPlayAgain()
 {
+	//Asks the player if they would like to replay
 	std::cout << std::endl << "Would you like to play again?" << std::endl;
 	std::cout << "1| Yes" << std::endl << "2| No" << std::endl << std::endl << "Your choice -> ";
 
+	//Get user input
 	choice = validateInput(1, 2);
 
 	switch (choice)
 	{
 		case 1:
+			//clears the facts within working memory so that system can start from scratch
 			std::cout << std::endl << "Great let's play again, reloading expert system..." << std::endl;
 			wM.clearFacts();
 			setPlayAgain(true);
 			setCanExit(false);
 			break;
 		case 2:
+			//exits the program after letting the user know 
 			std::cout << std::endl << "No problem, exiting program now..." << std::endl;
 			std::cout << std::endl << "Thank you for enquiring the wait for table expert system today, goodbye!" << std::endl << std::endl;
 			setPlayAgain(false);
 			setCanExit(true);
 			break;
 		default:
+			//If an error were to ever happen then it would just exit the program
 			std::cout << "Something went wrong here, exiting program..." << std::endl;
 			setPlayAgain(false);
 			setCanExit(true);
