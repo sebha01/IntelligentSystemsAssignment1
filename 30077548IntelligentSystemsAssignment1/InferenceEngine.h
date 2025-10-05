@@ -11,12 +11,15 @@ class InferenceEngine {
 		int choice = 0;
 		bool canExit = false;
 		bool playAgain = true;
+		bool resetScreen = false;
 	public:
 		//getters and setters for main loop
 		bool getCanExit();
 		void setCanExit(bool var);
 		bool getPlayAgain();
 		void setPlayAgain(bool var);
+		bool getResetScreen();
+		void setResetScreen(bool var);
 		//Input validation function and reset choice
 		int validateInput(int minChoice, int maxChoice);
 		void resetChoice();
@@ -49,6 +52,16 @@ bool InferenceEngine::getPlayAgain()
 void InferenceEngine::setPlayAgain(bool var)
 {
 	this->playAgain = var;
+}
+
+bool InferenceEngine::getResetScreen()
+{
+	return resetScreen;
+}
+
+void InferenceEngine::setResetScreen(bool var)
+{
+	this->resetScreen = var;
 }
 
 int InferenceEngine::validateInput(int minChoice, int maxChoice)
@@ -327,8 +340,9 @@ void InferenceEngine::askToPlayAgain()
 	{
 		case 1:
 			//clears the facts within working memory so that system can start from scratch
-			std::cout << std::endl << "Great let's play again, reloading expert system..." << std::endl;
+			std::cout << std::endl << "Great let's play again!" << std::endl;
 			wM.clearFacts();
+			setResetScreen(true);
 			setPlayAgain(true);
 			setCanExit(false);
 			break;
