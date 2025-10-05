@@ -15,7 +15,6 @@ public:
 	void init();
 	void showTitle();
 	void update();
-	int resetChoice();
 	void startDelay(double secondsToDelay, std::string messageToDisplay);
 	void clearScreen();
 };

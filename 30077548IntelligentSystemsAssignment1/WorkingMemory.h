@@ -10,7 +10,7 @@ class WorkingMemory {
 		void addFact(Fact f);
 		bool isFactInWM(std::string name);
 		std::string getFactValue(std::string name);
-		std::vector<Fact> getFactData();
+		std::vector<Fact>& getFactData();
 		void clearFacts();
 };
 
@@ -54,7 +54,7 @@ std::string WorkingMemory::getFactValue(std::string name)
 	return "";
 }
 
-std::vector<Fact> WorkingMemory::getFactData()
+std::vector<Fact>& WorkingMemory::getFactData()
 {
 	return facts;
 }
